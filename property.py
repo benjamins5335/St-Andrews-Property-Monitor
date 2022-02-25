@@ -1,4 +1,5 @@
 import threading
+import fb
 import json
 import time
 import requests
@@ -13,6 +14,12 @@ webhook = "https://discordapp.com/api/webhooks/646488319148163073/asoW2-tyA3JzAv
 # premier let (email sub)
 # braemore
 
+with open('config.json') as data:
+    data = json.load(data)
+    
+webhook = data['webhook']
+delay = data['delay']
+urlArray = data['urls']
 
 def logger(module, message):
     print("{} - {}: {}".format(time.strftime("%H:%M:%S.{}".format(str(time.time() % 1)[2:])[:8], time.gmtime(time.time())), module, message))
@@ -106,14 +113,18 @@ def monitor(site):
         time.sleep(15)
     
     
-def fb():
-    pageSource = getPageSource("https://www.facebook.com/AlbaResidentialStAndrews/")
-    with open('readme.txt', 'w') as f:
-        f.write(str(pageSource))
+# def fb():
+#     pageSource = getPageSource("https://www.facebook.com/AlbaResidentialStAndrews/")
+#     with open('readme.txt', 'w') as f:
+#         f.write(str(pageSource))
     
 
 
 if __name__ == "__main__":
+    for url in urlArray:
+        thread = threading.Thread(target=fb.run, args=[url])
+        thread.start()
+        time.sleep(delay/(len(urlArray)*1000))
 
     rollosThread = threading.Thread(target=monitor, args=["rollos"])
     thorntonsThread = threading.Thread(target=monitor, args=["thorntons"])

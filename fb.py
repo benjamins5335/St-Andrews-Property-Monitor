@@ -1,4 +1,3 @@
-from hashlib import new
 import json
 import threading
 import requests
@@ -74,24 +73,20 @@ def run(url):
         
         
         if (newMostRecentMessageContent != mostRecentMessageContent) and (mostRecentMessageContent != None) :
-            print("&&&&&&&&&&& NEW ALBA POST &&&&&&&&&&&")
+            print("&&&&&&&&&&& NEW FACEBOOK POST &&&&&&&&&&&")
             
             mostRecentMessageContent = newMostRecentMessageContent
             
-            # discordContent = ' '.join(mostRecentMessageContent.split())
-            # print(discordContent)
             requests.post(webhook, json={
-                "username" : "New Alba Property",
+                "username" : "New Property",
                 "embeds": [{
-                    "title": "Alba Facebook Page",
-                    "url": "https://www.facebook.com/AlbaResidentialStAndrews",
+                    "title": "New Facebook Property",
+                    "url": url,
                     "color": 8341306,
-                    "fields": [
-                    {
+                    "fields": [{
                         "name": "Description",
                         "value": mostRecentMessageContent[:1024]
-                    }
-                    ]
+                    }]
                 }]
             })
             
