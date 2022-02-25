@@ -1,5 +1,5 @@
 run:
-	python3 ra.py 
+	python3 property.py 
 
 install:
 	pip3 install selenium
